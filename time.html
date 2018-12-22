@@ -1,0 +1,72 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>SecondsLeft :: The Live Second Timer</title>
+		<style>
+			html, body {
+				margin: 0;
+				padding: 0;
+			}
+			a {
+				margin: 0;
+				padding: 10;
+				color: blue;
+				font-family: courier;
+			}
+			center {
+				font-family: courier;
+			}
+			#timelabel {
+				font-size: 48px;
+				margin-top: 5%;
+				color: black;
+			}
+			#sec {
+				font-size: 36px;
+				margin-top: 10%;
+				color: green;
+				background-color: #111111;
+				border: solid 15px black;
+			}
+		</style>
+	</head>
+	<body>
+		<a href="/">Back To Main Page</a>
+		<center>
+			<p id="timelabel"></p>
+			<div id="sec"></div>
+		</center>
+		<script type="text/javascript">
+			var q = location.href.split('/').slice(4, 7);
+			/*
+			console.log(q);
+			for(var i=0; i<q.length; i++) {
+				document.write(q[i] + '<br>');
+			}
+			*/
+			var sec = document.getElementById('sec');
+			var d = new Date();
+			d.setHours(q[0]);
+			d.setMinutes(q[1]);
+			d.setSeconds(q[2]);
+			var date = d.getTime() / 1000;
+			var left = Math.round(date - new Date().getTime() / 1000);;
+			//console.log(left);
+			var timelabel = document.getElementById('timelabel');
+			if (left >= 0) {
+				sec.innerHTML = '<span style="color: green;">' + left + ' Seconds Left</span>';
+				timelabel.innerHTML = 'Until ' + q[0] + ':' + q[1] + ':' + q[2];
+			}
+			else {
+				sec.innerHTML = '<span style="color: red;">' + -(left) + ' Seconds Passed</span>';
+				timelabel.innerHTML = 'After ' + q[0] + ':' + q[1] + ':' + q[2];
+			}
+			setInterval(function() {
+				var s = Math.round(date - new Date().getTime() / 1000);
+				if (s == -1) timelabel.innerHTML = 'After ' + q[0] + ':' + q[1] + ':' + q[2];
+				if (s >= 0) sec.innerHTML = '<span style="color: green;">' + s + ' Seconds Left</span>';
+				else sec.innerHTML = '<span style="color: red;">' + -(s) + ' Seconds Passed</span>';
+			}, 1000);
+		</script>
+	</body>
+</html>
